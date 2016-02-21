@@ -2,30 +2,35 @@
 
 //--------------------------------------------------------------
 void ofApp::setup(){
-
+    
     
     ofBuffer file = ofBufferFromFile("milk-tea-coffee.tsv");
-   
-    // grab the first line, which is just names. 
-    string nameLine = file.getNextLine();
-   
-    while (!file.isLastLine()){
-        string line = file.getNextLine();
-        vector < string > split = ofSplitString(line, "\t");
-        timeData data;
-        data.year = ofToInt(split[0]);
-        data.milk = ofToFloat(split[1]);
-        data.tea = ofToFloat(split[2]);
-        data.coffee = ofToFloat(split[3]);
-        dataPoints.push_back(data);
+    
+    // grab the first line, which is just names.
+    string nameLine = file.getLines().begin().asString();
+    
+    for (auto l: file.getLines()){
+        string line = l;
+        if (l != nameLine && !l.empty()) {
+            vector<string> split = ofSplitString(line, "\t");
+            
+            timeData data;
+            data.year = ofToInt(split[0]);
+            data.milk = ofToFloat(split[1]);
+            data.tea = ofToFloat(split[2]);
+            data.coffee = ofToFloat(split[3]);
+            dataPoints.push_back(data);
+        }
     }
     
     
-    // let's find the min and max years, and the max value for the data. 
+    // let's find the min and max years, and the max value for the data.
     // years are easy, we know it's the first and last year of the array.
     
     minYear = dataPoints[0].year;
+    ofLog() << "min year = " << minYear;
     maxYear = dataPoints[dataPoints.size()-1].year;
+    ofLog() << "max year = " << maxYear;
     
     // search lineraly through the data to find the max value;
     
@@ -41,6 +46,7 @@ void ofApp::setup(){
             maxValue = dataPoints[i].tea;
         }
     }
+
     
     
     dimensions.x = 150;
@@ -49,7 +55,7 @@ void ofApp::setup(){
     dimensions.height = 400;
     
     
-    ofBackground(180,180,180);
+    ofBackground(180);
     
 }
 
@@ -61,61 +67,16 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    ofSetColor(255,255,255);
-    ofRect(dimensions.x, dimensions.y, dimensions.width, dimensions.height);
+    ofSetColor(255);
+    ofDrawRectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height);
     
-    ofSetColor(90,90,90);
+    ofSetColor(90);
     for (int i = 0; i < dataPoints.size(); i++){
         
         float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
         float y = dimensions.y + ofMap( dataPoints[i].coffee, 0, maxValue, dimensions.height, 0);
         
-        ofCircle(x,y, 2);
+        ofDrawCircle(x,y, 2);
     }
     
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }

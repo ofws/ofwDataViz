@@ -104,7 +104,6 @@ void ofApp::draw(){
         ofCurveVertex(x,y);
          if (i == dataPoints.size()-1) ofVertex(x,y); 
         
-        //ofCircle(x,y, 2);
     }
     ofVertex(dimensions.x + dimensions.width, dimensions.y + dimensions.height);
     ofEndShape();
