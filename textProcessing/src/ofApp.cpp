@@ -1,26 +1,18 @@
 #include "ofApp.h"
 
-
-
 bool sortByCount(const wordCountValue & a, const wordCountValue & b){
-    
     return a.count > b.count;
 }
-
 
 //--------------------------------------------------------------
 void ofApp::setup(){
 
-    ofBackground(0,0,0);
+    ofBackground(0);
     ofSetCircleResolution(100);
     ofEnableAlphaBlending();
     
     ofEnableBlendMode(OF_BLENDMODE_ADD);
-    // let's get the top 100 sites in text files.  Use CURL so we can handle redirects, etc. 
-    
-    
-     
-    
+    // let's get the top 100 sites in text files.  Use CURL so we can handle redirects, etc.
     
     ofBuffer file = ofBufferFromFile("kingSpeech.txt");
     string textAsString = file;
@@ -54,7 +46,6 @@ void ofApp::setup(){
         }
     }
     
-    
     vector < string > textBrokenUp = ofSplitString(textAsString, " ", true, true);
     for (int i = 0; i < textBrokenUp.size(); i++){
         bool bAnyMatch = false;
@@ -81,10 +72,6 @@ void ofApp::setup(){
     for (int i = 0; i < words.size(); i++){
         cout << words[i].word << " " << words[i].count << endl;
     }
-    
-   
-    
-    
 }
 
 //--------------------------------------------------------------
@@ -94,51 +81,15 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-
     
-}
-
-//--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+    ofBackgroundGradient(80, 0);
+    for (int i = 0; i < words.size(); i++){
+        int lineHeight = 15;
+        int padding = 30;
+        int heightBound = ofGetHeight() - 60;
+        int y = padding + (i * lineHeight)%heightBound;
+        int x = padding + (130 * ((int)(i * lineHeight)/heightBound));
+        ofDrawBitmapStringHighlight(ofToString(words[i].count) + " : " + words[i].word, x, y);
+    }
+    
 }
