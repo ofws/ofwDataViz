@@ -44,8 +44,9 @@ bool ofApp::removeWordIf(LyricWord &wrd) {
 //--------------------------------------------------------------
 void ofApp::setup() {
     
+    ofEnableAntiAliasing();
     // load the font
-    font.loadFont("Helvetica.dfont", 9);
+    font.load("Helvetica.dfont", 10);
     sortTypeInfo = "no sort";
     words.clear();
     
@@ -186,27 +187,3 @@ void ofApp::keyPressed  (int key){
     
 }
 
-//--------------------------------------------------------------
-void ofApp::keyReleased  (int key){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-	
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}

@@ -17,7 +17,7 @@ ofColor avgPixelValue ( ofImage & img){
     int green = 0;
     int blue = 0;
     
-    ofPixelsRef ref = img.getPixelsRef();
+    ofPixelsRef ref = img.getPixels();
     
     for (int i = 0; i < w; i++){
         for (int j = 0; j < h; j++){
@@ -54,7 +54,7 @@ void ofApp::setup(){
         
         
         imgAndColor temp;
-        temp.img.loadImage(dir.getPath(i));
+        temp.img.load(dir.getPath(i));
         temp.avg = avgPixelValue(temp.img);
         images.push_back(temp);
         //cout << dir.getPath(i) << endl;

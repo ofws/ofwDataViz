@@ -79,9 +79,7 @@ void ofApp::searchGoogleImages() {
                 cout << command << endl;
                 system(command.c_str());
                 
-                
                 count ++;
-                
                 
                 contentsCopy = contentsCopy.substr(largeMatch.offset + largeMatch.length);
                 
@@ -148,7 +146,7 @@ void ofApp::searchGoogleImages() {
 void ofApp::update(){
     for(int i=0; i<images.size(); i++) {
         if(!images[i].bDoneLoading) {
-            images[i].loadImage(images[i].url);
+            images[i].load(images[i].url);
             images[i].bDoneLoading = true;
             break;
         }
@@ -195,45 +193,5 @@ void ofApp::keyPressed(int key){
     
     page += 22;
     searchGoogleImages();
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-    
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
     
 }
