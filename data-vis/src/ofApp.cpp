@@ -11,21 +11,9 @@ void ofApp::setup(){
 //    ofLog() << file.getText();
     
     // grab the first line, which is just labels.
-//    string nameLine = file.getFirstLine();
     string nameLine = file.getLines().begin().asString();
     
     
-//    while (!file.isLastLine()){
-//        string line = file.getNextLine();
-//        vector < string > split = ofSplitString(line, "\t");
-//        popData data;
-//        data.year = ofToInt(split[0]);
-//        data.ny = ofToInt(split[1]);
-//        data.ala = ofToInt(split[2]);
-//        data.lou = ofToInt(split[3]);
-//        dataPoints.push_back(data);
-//    }
-
     for (auto l: file.getLines()){
         string line = l;
         if (l != file.getLines().begin().asString() && !l.empty()) {
