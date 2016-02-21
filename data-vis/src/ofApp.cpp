@@ -6,7 +6,6 @@ void ofApp::setup(){
     font.load("Quicksand-Bold.otf", 20);
     labelFont.load("Quicksand-Regular.otf", 10);
     
-    
     ofBuffer file = ofBufferFromFile("population.tsv");
 //    ofLog() << file.getText();
     
@@ -16,7 +15,7 @@ void ofApp::setup(){
     
     for (auto l: file.getLines()){
         string line = l;
-        if (l != file.getLines().begin().asString() && !l.empty()) {
+        if (l != nameLine && !l.empty()) {
             vector<string> split = ofSplitString(line, "\t");
             popData data;
             data.year = ofToInt(split[0]);
@@ -103,26 +102,6 @@ void ofApp::draw(){
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
     
     ofRectangle rect = font.getStringBoundingBox("NewYork", dimensions.x, dimensions.y-15);
@@ -139,34 +118,4 @@ void ofApp::mousePressed(int x, int y, int button){
     if (rect.inside(ofPoint(x,y))){
         which = 2;
     }
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }

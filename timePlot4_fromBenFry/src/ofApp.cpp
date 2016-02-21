@@ -7,19 +7,21 @@ void ofApp::setup(){
     ofBuffer file = ofBufferFromFile("milk-tea-coffee.tsv");
    
     // grab the first line, which is just names. 
-    string nameLine = file.getNextLine();
-   
-    while (!file.isLastLine()){
-        string line = file.getNextLine();
-        vector < string > split = ofSplitString(line, "\t");
-        timeData data;
-        data.year = ofToInt(split[0]);
-        data.milk = ofToFloat(split[1]);
-        data.tea = ofToFloat(split[2]);
-        data.coffee = ofToFloat(split[3]);
-        dataPoints.push_back(data);
-        
-        valuesSmoothed.push_back(0);
+    string nameLine = file.getLines().begin().asString();
+    
+    for (auto l: file.getLines()){
+        string line = l;
+        if (l != nameLine && !l.empty()) {
+            vector<string> split = ofSplitString(line, "\t");
+            
+            timeData data;
+            data.year = ofToInt(split[0]);
+            data.milk = ofToFloat(split[1]);
+            data.tea = ofToFloat(split[2]);
+            data.coffee = ofToFloat(split[3]);
+            dataPoints.push_back(data);
+            valuesSmoothed.push_back(0);
+        }
     }
     
     
@@ -27,7 +29,9 @@ void ofApp::setup(){
     // years are easy, we know it's the first and last year of the array.
     
     minYear = dataPoints[0].year;
+    ofLog() << "min year = " << minYear;
     maxYear = dataPoints[dataPoints.size()-1].year;
+    ofLog() << "max year = " << maxYear;
     
     // search lineraly through the data to find the max value;
     
@@ -55,10 +59,10 @@ void ofApp::setup(){
     dimensions.width = 700;
     dimensions.height = 400;
     
-    font.loadFont("bfont.ttf", 20);
-    labelFont.loadFont("bFont.ttf", 10);
+    font.load("bfont.ttf", 20);
+    labelFont.load("bFont.ttf", 10);
     
-    ofBackground(220,220,220);
+    ofBackground(220);
     
     which = 0;
     
@@ -82,10 +86,10 @@ void ofApp::update(){
 //--------------------------------------------------------------
 void ofApp::draw(){
 
-    ofSetColor(255,255,255);
-    ofRect(dimensions.x, dimensions.y, dimensions.width, dimensions.height);
+    ofSetColor(255);
+    ofDrawRectangle(dimensions.x, dimensions.y, dimensions.width, dimensions.height);
     
-    ofSetColor(90,90,90);
+    ofSetColor(90);
     
     ofBeginShape();
     ofVertex(dimensions.x, dimensions.y + dimensions.height);
@@ -106,15 +110,15 @@ void ofApp::draw(){
     ofEndShape();
     
     if (which == 0) ofSetColor(180,90,90);
-    else ofSetColor(90,90,90);
+    else ofSetColor(90);
     font.drawString("Milk", dimensions.x, dimensions.y-15);
     
     if (which == 1) ofSetColor(180,90,90);
-    else ofSetColor(90,90,90);
+    else ofSetColor(90);
     font.drawString("Tea", dimensions.x + 80, dimensions.y-15);
     
     if (which == 2) ofSetColor(180,90,90);
-    else ofSetColor(90,90,90);
+    else ofSetColor(90);
     font.drawString("Coffee", dimensions.x + 160, dimensions.y-15);
     
     // draw tick marks and labels
@@ -124,9 +128,9 @@ void ofApp::draw(){
         if (dataPoints[i].year % 10 == 0){
             float x = dimensions.x + ofMap( dataPoints[i].year, minYear, maxYear, 0,dimensions.width);
             float y = dimensions.y + dimensions.height;
-            ofSetColor(90,90,90);
+            ofSetColor(90);
             labelFont.drawString(ofToString( dataPoints[i].year), x, y + 20);
-            ofSetColor(220,220,220);
+            ofSetColor(220);
             //ofLine(x, y, x,  dimensions.y);
         }
     }
@@ -136,38 +140,16 @@ void ofApp::draw(){
             float x = dimensions.x;
             float y = dimensions.y + ofMap(i, 0, maxValue, dimensions.height, 0);
             
-            ofSetColor(90,90,90);
+            ofSetColor(90);
             labelFont.drawString(ofToString( i ), x - 30, y + 5);
-            ofLine(x,y, x-5,y);
+            ofDrawLine(x,y, x-5,y);
         }
     }
     
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-
-    
     ofRectangle rect = font.getStringBoundingBox("Milk", dimensions.x, dimensions.y-15);
     if (rect.inside(ofPoint(x,y))){
         which = 0;
@@ -177,31 +159,9 @@ void ofApp::mousePressed(int x, int y, int button){
     if (rect.inside(ofPoint(x,y))){
         which = 1;
     }
-
+    
     rect = font.getStringBoundingBox("Coffee", dimensions.x + 160, dimensions.y-15);
     if (rect.inside(ofPoint(x,y))){
         which = 2;
     }
-        
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
 }
